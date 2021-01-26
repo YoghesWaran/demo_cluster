@@ -750,7 +750,7 @@ if __name__ == '__main__':
       acc_list.append(acc)
       nmi_list.append(nmi)
     print (acc_list)
-    print (nmi_list)
+    print (nmi_list)"""
     DisKmeans(db, lam)
     
     
