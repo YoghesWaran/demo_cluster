@@ -353,39 +353,21 @@ class TMM(object):
   def predict(self, X):
     return self.transform(X).argmax(axis=1)
 
-def load_mnist(root, training):
-  if training:
-    data = 'train-images-idx3-ubyte'
-    label = 'train-labels-idx1-ubyte'
-    N = 60000
-  else:
-    data = 't10k-images-idx3-ubyte'
-    label = 't10k-labels-idx1-ubyte'
-    N = 10000
-  with open(root+data, 'rb') as fin:
-    fin.seek(16, os.SEEK_SET)
-    X = np.fromfile(fin, dtype=np.uint8).reshape((N,28*28))
-  with open(root+label, 'rb') as fin:
-    fin.seek(8, os.SEEK_SET)
-    Y = np.fromfile(fin, dtype=np.uint8)
-  return X, Y
+def load_mnist():
+    df=pd.read_csv('/content/Breast_cancer.csv')
+    df.drop(columns=['id','Unnamed: 32'],inplace =True)
+    Y=df['diagnosis'].values
+    df.drop(columns=['diagnosis'],inplace =True)
+    X=df.values
+    return X,Y
 
 def make_mnist_data():
-  X, Y = load_mnist('../mnist/', True)
-  X = X.astype(np.float64)*0.02
-  write_db(X, Y, 'mnist_train')
-
-  X_, Y_ = read_db('mnist_train', True)
-  assert np.abs((X - X_)).mean() < 1e-5
-  assert (Y != Y_).sum() == 0
-
-  X2, Y2 = load_mnist('../mnist/', False)
-  X2 = X2.astype(np.float64)*0.02
+  X, Y = load_mnist()
+  write_db(X1, Y1, 'mnist_train')
+  X1,X2,Y1,Y2=train_test_split(X,Y,test_size=0.3,stratify=Y)
+  write_db(X1, Y1, 'mnist_train')
   write_db(X2, Y2, 'mnist_test')
-
-  X3 = np.concatenate((X,X2), axis=0)
-  Y3 = np.concatenate((Y,Y2), axis=0)
-  write_db(X3,Y3, 'mnist_total')
+  write_db(X,Y, 'mnist_total')
 
 def make_reuters_data():
   np.random.seed(1234)
