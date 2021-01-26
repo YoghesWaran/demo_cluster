@@ -44,7 +44,7 @@ def vis_cluster(dist, patch_dims, ntop, img):
 
   cluster.sort(key = lambda x: len(x), reverse = True)
   for i in cluster:
-    print len(i)
+    print( len(i))
     i.sort(key = lambda x: x[1], reverse=True)
   viz = np.zeros((patch_dims[0]*len(cluster), patch_dims[1]*ntop, img.shape[-1]))
 
@@ -484,7 +484,7 @@ def load_stl(fname):
   crcb = crcb.reshape((crcb.shape[0], crcb.size/N))
 
   feature = np.concatenate(((H-0.2)*10.0, (crcb-128.0)/10.0), axis=1)
-  print feature.shape
+  print( feature.shape)
 
   return feature, X[:,:,:,[2,1,0]]
 
@@ -686,12 +686,12 @@ def DisKmeans(db, update_interval = None):
       acc, freq = cluster_acc(Y_pred, Y)
       acc_list.append(acc)
       nmi = normalized_mutual_info_score(Y, Y_pred)
-      print freq
-      print freq.sum(axis=1)
-      print 'acc: ', acc, 'nmi: ', nmi
-      print (Y_pred != Y_pred_last).sum()*1.0/N
+      print( freq)
+      print (freq.sum(axis=1))
+      print ('acc: ', acc, 'nmi: ', nmi)
+      print ((Y_pred != Y_pred_last).sum()*1.0/N)
       if (Y_pred != Y_pred_last).sum() < 0.001*N:
-        print acc_list
+        print (acc_list)
         return acc, nmi
       time.sleep(1)
 
@@ -703,7 +703,7 @@ def DisKmeans(db, update_interval = None):
       bias = N_class*bias/bias.sum()
       weight = (weight**2)*bias
       weight = (weight.T/weight.sum(axis=1)).T
-      print weight[:10,:]
+      print (weight[:10,:])
       write_db(weight, np.zeros((weight.shape[0],)), 'train_weight')
 
       net.save('init.caffemodel')
@@ -749,8 +749,8 @@ if __name__ == '__main__':
       acc, nmi = DisKmeans(db, lam)
       acc_list.append(acc)
       nmi_list.append(nmi)
-    print acc_list
-    print nmi_list"""
+    print (acc_list)
+    print (nmi_list""")
     DisKmeans(db, lam)
     
     
