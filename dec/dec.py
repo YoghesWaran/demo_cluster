@@ -359,7 +359,12 @@ def load_mnist():
     Y=df['diagnosis'].values
     df.drop(columns=['diagnosis'],inplace =True)
     X=df.values
-    return X,Y
+    y1=np.ones(Y.shape)
+    for i,j in enumerate(Y):
+        if j=='B':
+            y1[i]=0
+    
+    return X,y1
 
 def make_mnist_data():
   X, Y = load_mnist()
