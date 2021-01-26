@@ -479,7 +479,7 @@ def load_stl(fname):
   H = H.reshape((H.shape[0], H.size/N))
 
   X_small = np.asarray(Parallel(n_jobs=n_jobs)( delayed(cv2.resize)(X[i], cmap_size) for i in xrange(N) ))
-  crcb = np.asarray(Parallel(n_jobs=n_jobs)( delayed(cv2.cvtColor)(X_small[i], cv.CV_RGB2YCrCb) for i in xrange(N) ))
+  crcb = np.asarray(Parallel(n_jobs=n_jobs)( delayed(cv2.cvtColor)(X_small[i], cv2.COLOR_BGR2YCR_CB)) for i in xrange(N) ))
   crcb = crcb[:,:,:,1:]
   crcb = crcb.reshape((crcb.shape[0], crcb.size/N))
 
