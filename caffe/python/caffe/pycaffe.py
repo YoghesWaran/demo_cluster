@@ -4,7 +4,7 @@ interface.
 """
 
 from collections import OrderedDict
-from itertools import izip_longest
+from itertools import zip_longest as izip_longest
 import numpy as np
 
 from ._caffe import Net, SGDSolver
